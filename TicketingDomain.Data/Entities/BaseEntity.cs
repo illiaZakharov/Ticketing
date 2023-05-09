@@ -11,7 +11,8 @@ namespace TicketingDomain.Data.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
-        public bool IsActive { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] 
+        public bool? IsActive { get; set; } = true;
 
         [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

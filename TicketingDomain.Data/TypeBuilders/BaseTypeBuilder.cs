@@ -18,6 +18,7 @@ namespace TicketingDomain.Data.TypeBuilders
             builder.Property(e => e.CreatedBy).ValueGeneratedOnAdd().HasDefaultValueSql("(current_user)");
             builder.Property(e => e.DateModified).ValueGeneratedOnUpdate();
             builder.Property(e => e.ModifiedBy).ValueGeneratedOnUpdate();
+            builder.Property(e => e.IsActive).ValueGeneratedOnAdd().HasDefaultValue(true);
         }
     }
 }

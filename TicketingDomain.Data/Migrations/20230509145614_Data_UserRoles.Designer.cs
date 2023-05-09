@@ -12,7 +12,7 @@ using TicketingDomain.Data;
 namespace TicketingDomain.Data.Migrations
 {
     [DbContext(typeof(TicketingDomainContext))]
-    [Migration("20230509125707_Data_UserRoles")]
+    [Migration("20230509145614_Data_UserRoles")]
     partial class Data_UserRoles
     {
         /// <inheritdoc />
@@ -63,8 +63,10 @@ namespace TicketingDomain.Data.Migrations
                         .ValueGeneratedOnUpdate()
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
+                    b.Property<bool?>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
 
                     b.Property<string>("ModifiedBy")
                         .ValueGeneratedOnUpdate()
@@ -111,8 +113,10 @@ namespace TicketingDomain.Data.Migrations
                     b.Property<DateTime>("EventDateTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
+                    b.Property<bool?>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
 
                     b.Property<string>("ModifiedBy")
                         .ValueGeneratedOnUpdate()
@@ -161,8 +165,10 @@ namespace TicketingDomain.Data.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
+                    b.Property<bool?>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
 
                     b.Property<string>("ModifiedBy")
                         .ValueGeneratedOnUpdate()
@@ -206,8 +212,10 @@ namespace TicketingDomain.Data.Migrations
                     b.Property<Guid>("EventId")
                         .HasColumnType("uuid");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
+                    b.Property<bool?>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
 
                     b.Property<string>("ModifiedBy")
                         .ValueGeneratedOnUpdate()
@@ -247,8 +255,10 @@ namespace TicketingDomain.Data.Migrations
                         .ValueGeneratedOnUpdate()
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
+                    b.Property<bool?>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
 
                     b.Property<string>("Method")
                         .IsRequired()
@@ -295,8 +305,10 @@ namespace TicketingDomain.Data.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
+                    b.Property<bool?>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
 
                     b.Property<string>("ModifiedBy")
                         .ValueGeneratedOnUpdate()
@@ -334,8 +346,10 @@ namespace TicketingDomain.Data.Migrations
                         .ValueGeneratedOnUpdate()
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
+                    b.Property<bool?>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
 
                     b.Property<string>("ModifiedBy")
                         .ValueGeneratedOnUpdate()
@@ -382,8 +396,10 @@ namespace TicketingDomain.Data.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
+                    b.Property<bool?>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
 
                     b.Property<string>("ModifiedBy")
                         .ValueGeneratedOnUpdate()
@@ -436,8 +452,10 @@ namespace TicketingDomain.Data.Migrations
                     b.Property<Guid>("EventId")
                         .HasColumnType("uuid");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
+                    b.Property<bool?>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
 
                     b.Property<string>("ModifiedBy")
                         .ValueGeneratedOnUpdate()
@@ -495,8 +513,10 @@ namespace TicketingDomain.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
+                    b.Property<bool?>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -553,8 +573,10 @@ namespace TicketingDomain.Data.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
+                    b.Property<bool?>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
 
                     b.Property<string>("ModifiedBy")
                         .ValueGeneratedOnUpdate()
@@ -601,8 +623,10 @@ namespace TicketingDomain.Data.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
+                    b.Property<bool?>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
 
                     b.Property<Guid>("LocationId")
                         .HasColumnType("uuid");
@@ -650,8 +674,10 @@ namespace TicketingDomain.Data.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
+                    b.Property<bool?>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
 
                     b.Property<string>("ModifiedBy")
                         .ValueGeneratedOnUpdate()
@@ -689,8 +715,10 @@ namespace TicketingDomain.Data.Migrations
                         .ValueGeneratedOnUpdate()
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
+                    b.Property<bool?>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
 
                     b.Property<string>("ModifiedBy")
                         .ValueGeneratedOnUpdate()
@@ -733,8 +761,10 @@ namespace TicketingDomain.Data.Migrations
                         .ValueGeneratedOnUpdate()
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
+                    b.Property<bool?>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
 
                     b.Property<string>("ModifiedBy")
                         .ValueGeneratedOnUpdate()

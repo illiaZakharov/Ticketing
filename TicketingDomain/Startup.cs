@@ -17,7 +17,7 @@ namespace TicketingDomain
             services.AddDbContext<TicketingDomainContext>(options =>
             {
                 options
-                    .UseNpgsql(_configuration.GetConnectionString("DefaultConnection"),
+                    .UseNpgsql(_configuration.GetConnectionString("TicketingDomainConnectionString"),
                         assembly =>
                             assembly.MigrationsAssembly("TicketingDomain.Data"));
             });
@@ -25,8 +25,9 @@ namespace TicketingDomain
             services.AddAutoMapper(typeof(Startup));
         }
 
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, TicketingDomainContext dbContext)
         {
+            dbContext.Database.Migrate();
         }
     }
 }
