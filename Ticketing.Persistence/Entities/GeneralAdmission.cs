@@ -13,11 +13,11 @@ namespace Ticketing.Persistence.Entities
         public Guid ZoneId { get; set; }
         public virtual Zone Zone { get; set; }
 
-        public virtual ICollection<TicketGA> Tickets { get; set; }
+        public virtual ICollection<GeneralAdmissionTicket> Tickets { get; set; }
 
         public GeneralAdmission()
         {
-            Tickets = new HashSet<TicketGA>();
+            Tickets = new HashSet<GeneralAdmissionTicket>();
         }
     }
 }

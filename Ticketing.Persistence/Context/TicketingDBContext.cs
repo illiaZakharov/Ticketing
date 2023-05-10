@@ -14,8 +14,8 @@ namespace Ticketing.Persistence.Context
         public virtual DbSet<GeneralAdmission> GeneralAdmissions { get; set; }
         public virtual DbSet<Offer> Offers { get; set; }
         public virtual DbSet<Seat> Seats { get; set; }
-        public virtual DbSet<TicketGA> TicketGA { get; set; }
-        public virtual DbSet<TicketS> TicketS { get; set; }
+        public virtual DbSet<GeneralAdmissionTicket> GeneralAdmissionTickets { get; set; }
+        public virtual DbSet<SeatTicket> SeatTickets { get; set; }
         public virtual DbSet<Venue> Venues { get; set; }
         public virtual DbSet<Zone> Zones { get; set; }
 
@@ -44,8 +44,8 @@ namespace Ticketing.Persistence.Context
             RegisterTypeBuilder<GeneralAdmission, GeneralAdmissionTypeBuilder>(modelBuilder);
             RegisterTypeBuilder<Offer, OfferTypeBuilder>(modelBuilder);
             RegisterTypeBuilder<Seat, SeatTypeBuilder>(modelBuilder);
-            RegisterTypeBuilder<TicketGA, TicketGATypeBuilder>(modelBuilder);
-            RegisterTypeBuilder<TicketS, TicketSTypeBuilder>(modelBuilder);
+            RegisterTypeBuilder<GeneralAdmissionTicket, GeneralAdmissionTicketTypeBuilder>(modelBuilder);
+            RegisterTypeBuilder<SeatTicket, SeatTicketTypeBuilder>(modelBuilder);
             RegisterTypeBuilder<Venue, VenueTypeBuilder>(modelBuilder);
             RegisterTypeBuilder<Zone, ZoneTypeBuilder>(modelBuilder);
 

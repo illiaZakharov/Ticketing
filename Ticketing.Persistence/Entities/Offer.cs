@@ -20,5 +20,14 @@ namespace Ticketing.Persistence.Entities
         [ForeignKey(nameof(Event))]
         public Guid EventId { get; set; }
         public virtual Event Event { get; set; }
+
+        public virtual ICollection<SeatTicket> SeatTickets { get; set; }
+        public virtual ICollection<GeneralAdmissionTicket> GeneralAdmissionTickets { get; set; }
+
+        public Offer()
+        {
+            SeatTickets = new HashSet<SeatTicket>();
+            GeneralAdmissionTickets = new HashSet<GeneralAdmissionTicket>();
+        }
     }
 }

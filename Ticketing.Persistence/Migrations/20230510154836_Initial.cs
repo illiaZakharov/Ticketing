@@ -165,7 +165,7 @@ namespace Ticketing.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TicketGA",
+                name: "GeneralAdmissionTicket",
                 schema: "Ticketing",
                 columns: table => new
                 {
@@ -173,6 +173,7 @@ namespace Ticketing.Persistence.Migrations
                     Price = table.Column<decimal>(type: "numeric", nullable: false),
                     Status = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     GeneralAdmissionId = table.Column<Guid>(type: "uuid", nullable: false),
+                    OfferId = table.Column<Guid>(type: "uuid", nullable: false),
                     IsActive = table.Column<bool>(type: "boolean", nullable: true, defaultValue: true),
                     DateCreated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "(now())"),
                     DateModified = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
@@ -181,17 +182,23 @@ namespace Ticketing.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TicketGA", x => x.Id);
+                    table.PrimaryKey("PK_GeneralAdmissionTicket", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TicketGA_GeneralAdmission_GeneralAdmissionId",
+                        name: "FK_GeneralAdmissionTicket_GeneralAdmission_GeneralAdmissionId",
                         column: x => x.GeneralAdmissionId,
                         principalSchema: "Ticketing",
                         principalTable: "GeneralAdmission",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_GeneralAdmissionTicket_Offer_OfferId",
+                        column: x => x.OfferId,
+                        principalSchema: "Ticketing",
+                        principalTable: "Offer",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "TicketS",
+                name: "SeatTicket",
                 schema: "Ticketing",
                 columns: table => new
                 {
@@ -199,6 +206,7 @@ namespace Ticketing.Persistence.Migrations
                     Price = table.Column<decimal>(type: "numeric", nullable: false),
                     Status = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     SeatId = table.Column<Guid>(type: "uuid", nullable: false),
+                    OfferId = table.Column<Guid>(type: "uuid", nullable: false),
                     IsActive = table.Column<bool>(type: "boolean", nullable: true, defaultValue: true),
                     DateCreated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "(now())"),
                     DateModified = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
@@ -207,9 +215,15 @@ namespace Ticketing.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TicketS", x => x.Id);
+                    table.PrimaryKey("PK_SeatTicket", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TicketS_Seat_SeatId",
+                        name: "FK_SeatTicket_Offer_OfferId",
+                        column: x => x.OfferId,
+                        principalSchema: "Ticketing",
+                        principalTable: "Offer",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_SeatTicket_Seat_SeatId",
                         column: x => x.SeatId,
                         principalSchema: "Ticketing",
                         principalTable: "Seat",
@@ -221,6 +235,18 @@ namespace Ticketing.Persistence.Migrations
                 schema: "Ticketing",
                 table: "GeneralAdmission",
                 column: "ZoneId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GeneralAdmissionTicket_GeneralAdmissionId",
+                schema: "Ticketing",
+                table: "GeneralAdmissionTicket",
+                column: "GeneralAdmissionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GeneralAdmissionTicket_OfferId",
+                schema: "Ticketing",
+                table: "GeneralAdmissionTicket",
+                column: "OfferId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Offer_EventId",
@@ -242,15 +268,15 @@ namespace Ticketing.Persistence.Migrations
                 column: "ZoneId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TicketGA_GeneralAdmissionId",
+                name: "IX_SeatTicket_OfferId",
                 schema: "Ticketing",
-                table: "TicketGA",
-                column: "GeneralAdmissionId");
+                table: "SeatTicket",
+                column: "OfferId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TicketS_SeatId",
+                name: "IX_SeatTicket_SeatId",
                 schema: "Ticketing",
-                table: "TicketS",
+                table: "SeatTicket",
                 column: "SeatId",
                 unique: true);
 
@@ -265,19 +291,11 @@ namespace Ticketing.Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Offer",
+                name: "GeneralAdmissionTicket",
                 schema: "Ticketing");
 
             migrationBuilder.DropTable(
-                name: "TicketGA",
-                schema: "Ticketing");
-
-            migrationBuilder.DropTable(
-                name: "TicketS",
-                schema: "Ticketing");
-
-            migrationBuilder.DropTable(
-                name: "Event",
+                name: "SeatTicket",
                 schema: "Ticketing");
 
             migrationBuilder.DropTable(
@@ -285,7 +303,15 @@ namespace Ticketing.Persistence.Migrations
                 schema: "Ticketing");
 
             migrationBuilder.DropTable(
+                name: "Offer",
+                schema: "Ticketing");
+
+            migrationBuilder.DropTable(
                 name: "Seat",
+                schema: "Ticketing");
+
+            migrationBuilder.DropTable(
+                name: "Event",
                 schema: "Ticketing");
 
             migrationBuilder.DropTable(

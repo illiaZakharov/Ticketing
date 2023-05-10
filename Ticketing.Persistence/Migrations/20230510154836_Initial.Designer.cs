@@ -12,7 +12,7 @@ using Ticketing.Persistence.Context;
 namespace Ticketing.Persistence.Migrations
 {
     [DbContext(typeof(TicketingDBContext))]
-    [Migration("20230510011603_Initial")]
+    [Migration("20230510154836_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -121,6 +121,60 @@ namespace Ticketing.Persistence.Migrations
                     b.ToTable("GeneralAdmission", "Ticketing");
                 });
 
+            modelBuilder.Entity("Ticketing.Persistence.Entities.GeneralAdmissionTicket", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasDefaultValueSql("uuid_generate_v4()");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("text")
+                        .HasDefaultValueSql("(current_user)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("(now())");
+
+                    b.Property<DateTime?>("DateModified")
+                        .ValueGeneratedOnUpdate()
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("GeneralAdmissionId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool?>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<string>("ModifiedBy")
+                        .ValueGeneratedOnUpdate()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("OfferId")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GeneralAdmissionId");
+
+                    b.HasIndex("OfferId");
+
+                    b.ToTable("GeneralAdmissionTicket", "Ticketing");
+                });
+
             modelBuilder.Entity("Ticketing.Persistence.Entities.Offer", b =>
                 {
                     b.Property<Guid>("Id")
@@ -221,7 +275,7 @@ namespace Ticketing.Persistence.Migrations
                     b.ToTable("Seat", "Ticketing");
                 });
 
-            modelBuilder.Entity("Ticketing.Persistence.Entities.TicketGA", b =>
+            modelBuilder.Entity("Ticketing.Persistence.Entities.SeatTicket", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -243,63 +297,17 @@ namespace Ticketing.Persistence.Migrations
                         .ValueGeneratedOnUpdate()
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("GeneralAdmissionId")
+                    b.Property<bool?>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<string>("ModifiedBy")
+                        .ValueGeneratedOnUpdate()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("OfferId")
                         .HasColumnType("uuid");
-
-                    b.Property<bool?>("IsActive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(true);
-
-                    b.Property<string>("ModifiedBy")
-                        .ValueGeneratedOnUpdate()
-                        .HasColumnType("text");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GeneralAdmissionId");
-
-                    b.ToTable("TicketGA", "Ticketing");
-                });
-
-            modelBuilder.Entity("Ticketing.Persistence.Entities.TicketS", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasDefaultValueSql("uuid_generate_v4()");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("text")
-                        .HasDefaultValueSql("(current_user)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValueSql("(now())");
-
-                    b.Property<DateTime?>("DateModified")
-                        .ValueGeneratedOnUpdate()
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool?>("IsActive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(true);
-
-                    b.Property<string>("ModifiedBy")
-                        .ValueGeneratedOnUpdate()
-                        .HasColumnType("text");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric");
@@ -314,10 +322,12 @@ namespace Ticketing.Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("OfferId");
+
                     b.HasIndex("SeatId")
                         .IsUnique();
 
-                    b.ToTable("TicketS", "Ticketing");
+                    b.ToTable("SeatTicket", "Ticketing");
                 });
 
             modelBuilder.Entity("Ticketing.Persistence.Entities.Venue", b =>
@@ -422,6 +432,25 @@ namespace Ticketing.Persistence.Migrations
                     b.Navigation("Zone");
                 });
 
+            modelBuilder.Entity("Ticketing.Persistence.Entities.GeneralAdmissionTicket", b =>
+                {
+                    b.HasOne("Ticketing.Persistence.Entities.GeneralAdmission", "GeneralAdmission")
+                        .WithMany("Tickets")
+                        .HasForeignKey("GeneralAdmissionId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.HasOne("Ticketing.Persistence.Entities.Offer", "Offer")
+                        .WithMany("GeneralAdmissionTickets")
+                        .HasForeignKey("OfferId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.Navigation("GeneralAdmission");
+
+                    b.Navigation("Offer");
+                });
+
             modelBuilder.Entity("Ticketing.Persistence.Entities.Offer", b =>
                 {
                     b.HasOne("Ticketing.Persistence.Entities.Event", "Event")
@@ -452,24 +481,21 @@ namespace Ticketing.Persistence.Migrations
                     b.Navigation("Zone");
                 });
 
-            modelBuilder.Entity("Ticketing.Persistence.Entities.TicketGA", b =>
+            modelBuilder.Entity("Ticketing.Persistence.Entities.SeatTicket", b =>
                 {
-                    b.HasOne("Ticketing.Persistence.Entities.GeneralAdmission", "GeneralAdmission")
-                        .WithMany("Tickets")
-                        .HasForeignKey("GeneralAdmissionId")
+                    b.HasOne("Ticketing.Persistence.Entities.Offer", "Offer")
+                        .WithMany("SeatTickets")
+                        .HasForeignKey("OfferId")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
-                    b.Navigation("GeneralAdmission");
-                });
-
-            modelBuilder.Entity("Ticketing.Persistence.Entities.TicketS", b =>
-                {
                     b.HasOne("Ticketing.Persistence.Entities.Seat", "Seat")
                         .WithOne("Ticket")
-                        .HasForeignKey("Ticketing.Persistence.Entities.TicketS", "SeatId")
+                        .HasForeignKey("Ticketing.Persistence.Entities.SeatTicket", "SeatId")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
+
+                    b.Navigation("Offer");
 
                     b.Navigation("Seat");
                 });
@@ -494,6 +520,13 @@ namespace Ticketing.Persistence.Migrations
             modelBuilder.Entity("Ticketing.Persistence.Entities.GeneralAdmission", b =>
                 {
                     b.Navigation("Tickets");
+                });
+
+            modelBuilder.Entity("Ticketing.Persistence.Entities.Offer", b =>
+                {
+                    b.Navigation("GeneralAdmissionTickets");
+
+                    b.Navigation("SeatTickets");
                 });
 
             modelBuilder.Entity("Ticketing.Persistence.Entities.Seat", b =>

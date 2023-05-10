@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ticketing.Persistence.Entities
 {
-    public class TicketGA : BaseEntity
+    public class GeneralAdmissionTicket : BaseEntity
     {
         [Required]
         public decimal Price { get; set; }
@@ -16,5 +16,10 @@ namespace Ticketing.Persistence.Entities
         [ForeignKey(nameof(GeneralAdmission))]
         public Guid GeneralAdmissionId { get; set; }
         public virtual GeneralAdmission GeneralAdmission { get; set; }
+
+        [Required]
+        [ForeignKey(nameof(Offer))]
+        public Guid OfferId { get; set; }
+        public virtual Offer Offer { get; set; }
     }
 }

@@ -16,6 +16,6 @@ namespace Ticketing.Persistence.Entities
         public Guid ZoneId { get; set; }
         public virtual Zone Zone { get; set; }
 
-        public virtual TicketS Ticket { get; set; }
+        public virtual SeatTicket Ticket { get; set; }
     }
 }
